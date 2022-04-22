@@ -1,6 +1,6 @@
 ﻿namespace TourneyTracker
 {
-    partial class NewTournamentForm
+    partial class CreateTournamentForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewTournamentForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateTournamentForm));
             this.TitleHeaderLabel = new System.Windows.Forms.Label();
             this.TournamentNameLabel = new System.Windows.Forms.Label();
             this.TournamentNameTextBox = new System.Windows.Forms.TextBox();

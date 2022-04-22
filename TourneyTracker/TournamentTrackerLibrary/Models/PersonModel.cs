@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TournamentTrackerLibrary
+namespace TournamentTrackerLibrary.Models
 {
     /// <summary>
     /// A person is who will form a part of a team.

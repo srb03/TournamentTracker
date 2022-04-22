@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TournamentTrackerLibrary
+namespace TournamentTrackerLibrary.Models
 {
     /// <summary>
     /// Each entry had an team competing in a matchup (1 Matchup had 2 entries).

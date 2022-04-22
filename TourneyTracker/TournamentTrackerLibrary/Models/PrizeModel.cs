@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TournamentTrackerLibrary
+namespace TournamentTrackerLibrary.Models
 {
     /// <summary>
     /// A prize is for the winner or runnerup.
@@ -33,5 +33,21 @@ namespace TournamentTrackerLibrary
         /// If this prop is setting then the PrizeAmount prop must be 0.
         /// </summary>
         public double PrizePercent { get; set; }
+
+
+        /// <summary>
+        /// Constructor for the Prize. A prize will give to the winner.
+        /// </summary>
+        /// <param name="placeNumber">The numeric value for the place.</param>
+        /// <param name="placeName">The name of the prize.</param>
+        /// <param name="prizeAmount">The quantity given to the winner.</param>
+        /// <param name="prizePercent">The percent of the total entry fee.</param>
+        public PrizeModel(int placeNumber, string placeName, decimal prizeAmount, double prizePercent)
+        {
+            PlaceNumber = placeNumber;
+            PrizeName = placeName;
+            PrizeAmount = prizeAmount;
+            PrizePercent = prizePercent;
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace TourneyTracker
 
         private void CreateTournamentButton_Click(object sender, EventArgs e)
         {
-            NewTournamentForm frm = new NewTournamentForm();
+            CreateTournamentForm frm = new CreateTournamentForm();
             frm.Show();
         }
     }

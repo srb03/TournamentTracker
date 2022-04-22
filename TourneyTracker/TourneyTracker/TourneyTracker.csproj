@@ -62,11 +62,12 @@
     <Compile Include="DashboardTournamentForm.Designer.cs">
       <DependentUpon>DashboardTournamentForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewTournamentForm.cs">
+    <Compile Include="IPrizeRequester.cs" />
+    <Compile Include="CreateTournamentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewTournamentForm.Designer.cs">
-      <DependentUpon>NewTournamentForm.cs</DependentUpon>
+    <Compile Include="CreateTournamentForm.Designer.cs">
+      <DependentUpon>CreateTournamentForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,8 +86,8 @@
     <EmbeddedResource Include="DashboardTournamentForm.resx">
       <DependentUpon>DashboardTournamentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewTournamentForm.resx">
-      <DependentUpon>NewTournamentForm.cs</DependentUpon>
+    <EmbeddedResource Include="CreateTournamentForm.resx">
+      <DependentUpon>CreateTournamentForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -112,6 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TournamentTrackerLibrary\TournamentTrackerLibrary.csproj">
+      <Project>{fed52ccf-95ff-4f99-a8f8-588aa6682221}</Project>
+      <Name>TournamentTrackerLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

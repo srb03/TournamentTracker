@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TournamentTrackerLibrary
+namespace TournamentTrackerLibrary.Models
 {
     /// <summary>
     /// The matchup is the game between to teams.

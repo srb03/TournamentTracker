@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TournamentTrackerLibrary.Models;
 
 namespace TourneyTracker
 {
-    public partial class NewTournamentForm : Form
+    public partial class CreateTournamentForm : Form, IPrizeRequester
     {
-        public NewTournamentForm()
+        List<PrizeModel> selectedPrizes = new List<PrizeModel>();
+
+        public CreateTournamentForm()
         {
             InitializeComponent();
         }
@@ -27,6 +30,11 @@ namespace TourneyTracker
         {
             CreatePrizeForm frm = new CreatePrizeForm();
             frm.Show();
+        }
+
+        public void PrizeComplete(PrizeModel prize)
+        {
+            selectedPrizes.Add(prize);
         }
     }
 }

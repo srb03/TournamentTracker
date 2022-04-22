@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreatePrizeForm));
             this.TitleHeaderLabel = new System.Windows.Forms.Label();
             this.PrizePlaceLabel = new System.Windows.Forms.Label();
-            this.PrizeNameTextBox = new System.Windows.Forms.TextBox();
+            this.PlaceNameTextBox = new System.Windows.Forms.TextBox();
             this.PlaceNameLabel = new System.Windows.Forms.Label();
             this.PrizePercentRadioButton = new System.Windows.Forms.RadioButton();
             this.PrizeAmountRadioButton = new System.Windows.Forms.RadioButton();
@@ -51,7 +51,7 @@
             this.TitleHeaderLabel.Location = new System.Drawing.Point(12, 9);
             this.TitleHeaderLabel.Name = "TitleHeaderLabel";
             this.TitleHeaderLabel.Size = new System.Drawing.Size(161, 45);
-            this.TitleHeaderLabel.TabIndex = 2;
+            this.TitleHeaderLabel.TabIndex = 1;
             this.TitleHeaderLabel.Text = "New Prize";
             // 
             // PrizePlaceLabel
@@ -61,16 +61,16 @@
             this.PrizePlaceLabel.Location = new System.Drawing.Point(15, 77);
             this.PrizePlaceLabel.Name = "PrizePlaceLabel";
             this.PrizePlaceLabel.Size = new System.Drawing.Size(113, 30);
-            this.PrizePlaceLabel.TabIndex = 7;
+            this.PrizePlaceLabel.TabIndex = 2;
             this.PrizePlaceLabel.Text = "Prize Place";
             // 
-            // PrizeNameTextBox
+            // PlaceNameTextBox
             // 
-            this.PrizeNameTextBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PrizeNameTextBox.Location = new System.Drawing.Point(147, 141);
-            this.PrizeNameTextBox.Name = "PrizeNameTextBox";
-            this.PrizeNameTextBox.Size = new System.Drawing.Size(241, 35);
-            this.PrizeNameTextBox.TabIndex = 8;
+            this.PlaceNameTextBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PlaceNameTextBox.Location = new System.Drawing.Point(147, 141);
+            this.PlaceNameTextBox.Name = "PlaceNameTextBox";
+            this.PlaceNameTextBox.Size = new System.Drawing.Size(241, 35);
+            this.PlaceNameTextBox.TabIndex = 5;
             // 
             // PlaceNameLabel
             // 
@@ -79,7 +79,7 @@
             this.PlaceNameLabel.Location = new System.Drawing.Point(15, 144);
             this.PlaceNameLabel.Name = "PlaceNameLabel";
             this.PlaceNameLabel.Size = new System.Drawing.Size(124, 30);
-            this.PlaceNameLabel.TabIndex = 9;
+            this.PlaceNameLabel.TabIndex = 4;
             this.PlaceNameLabel.Text = "Place Name";
             // 
             // PrizePercentRadioButton
@@ -89,22 +89,24 @@
             this.PrizePercentRadioButton.Location = new System.Drawing.Point(236, 219);
             this.PrizePercentRadioButton.Name = "PrizePercentRadioButton";
             this.PrizePercentRadioButton.Size = new System.Drawing.Size(152, 34);
-            this.PrizePercentRadioButton.TabIndex = 14;
-            this.PrizePercentRadioButton.TabStop = true;
+            this.PrizePercentRadioButton.TabIndex = 8;
             this.PrizePercentRadioButton.Text = "Prize Percent";
             this.PrizePercentRadioButton.UseVisualStyleBackColor = true;
+            this.PrizePercentRadioButton.CheckedChanged += new System.EventHandler(this.PrizePercentRadioButton_CheckedChanged);
             // 
             // PrizeAmountRadioButton
             // 
             this.PrizeAmountRadioButton.AutoSize = true;
+            this.PrizeAmountRadioButton.Checked = true;
             this.PrizeAmountRadioButton.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PrizeAmountRadioButton.Location = new System.Drawing.Point(49, 219);
             this.PrizeAmountRadioButton.Name = "PrizeAmountRadioButton";
             this.PrizeAmountRadioButton.Size = new System.Drawing.Size(157, 34);
-            this.PrizeAmountRadioButton.TabIndex = 15;
+            this.PrizeAmountRadioButton.TabIndex = 6;
             this.PrizeAmountRadioButton.TabStop = true;
             this.PrizeAmountRadioButton.Text = "Prize Amount";
             this.PrizeAmountRadioButton.UseVisualStyleBackColor = true;
+            this.PrizeAmountRadioButton.CheckedChanged += new System.EventHandler(this.PrizeAmountRadioButton_CheckedChanged);
             // 
             // PrizeAmountTextBox
             // 
@@ -112,8 +114,9 @@
             this.PrizeAmountTextBox.Location = new System.Drawing.Point(49, 258);
             this.PrizeAmountTextBox.Name = "PrizeAmountTextBox";
             this.PrizeAmountTextBox.Size = new System.Drawing.Size(137, 35);
-            this.PrizeAmountTextBox.TabIndex = 16;
-            this.PrizeAmountTextBox.Text = "$ 0.00";
+            this.PrizeAmountTextBox.TabIndex = 7;
+            this.PrizeAmountTextBox.Text = "$0.00";
+            this.PrizeAmountTextBox.Leave += new System.EventHandler(this.PrizeAmountTextBox_Leave);
             // 
             // CreatePrizeButton
             // 
@@ -121,9 +124,10 @@
             this.CreatePrizeButton.Location = new System.Drawing.Point(119, 320);
             this.CreatePrizeButton.Name = "CreatePrizeButton";
             this.CreatePrizeButton.Size = new System.Drawing.Size(215, 61);
-            this.CreatePrizeButton.TabIndex = 24;
+            this.CreatePrizeButton.TabIndex = 10;
             this.CreatePrizeButton.Text = "Create Prize";
             this.CreatePrizeButton.UseVisualStyleBackColor = true;
+            this.CreatePrizeButton.Click += new System.EventHandler(this.CreatePrizeButton_Click);
             // 
             // PrizePlaceComboBox
             // 
@@ -135,7 +139,7 @@
             this.PrizePlaceComboBox.Location = new System.Drawing.Point(147, 78);
             this.PrizePlaceComboBox.Name = "PrizePlaceComboBox";
             this.PrizePlaceComboBox.Size = new System.Drawing.Size(241, 33);
-            this.PrizePlaceComboBox.TabIndex = 25;
+            this.PrizePlaceComboBox.TabIndex = 3;
             // 
             // PrizePercentNumericUpDown
             // 
@@ -143,7 +147,7 @@
             this.PrizePercentNumericUpDown.Location = new System.Drawing.Point(236, 258);
             this.PrizePercentNumericUpDown.Name = "PrizePercentNumericUpDown";
             this.PrizePercentNumericUpDown.Size = new System.Drawing.Size(120, 35);
-            this.PrizePercentNumericUpDown.TabIndex = 27;
+            this.PrizePercentNumericUpDown.TabIndex = 9;
             // 
             // CreatePrizeForm
             // 
@@ -156,7 +160,7 @@
             this.Controls.Add(this.PrizeAmountTextBox);
             this.Controls.Add(this.PrizeAmountRadioButton);
             this.Controls.Add(this.PrizePercentRadioButton);
-            this.Controls.Add(this.PrizeNameTextBox);
+            this.Controls.Add(this.PlaceNameTextBox);
             this.Controls.Add(this.PlaceNameLabel);
             this.Controls.Add(this.PrizePlaceLabel);
             this.Controls.Add(this.TitleHeaderLabel);
@@ -173,7 +177,7 @@
 
         private System.Windows.Forms.Label TitleHeaderLabel;
         private System.Windows.Forms.Label PrizePlaceLabel;
-        private System.Windows.Forms.TextBox PrizeNameTextBox;
+        private System.Windows.Forms.TextBox PlaceNameTextBox;
         private System.Windows.Forms.Label PlaceNameLabel;
         private System.Windows.Forms.RadioButton PrizePercentRadioButton;
         private System.Windows.Forms.RadioButton PrizeAmountRadioButton;
