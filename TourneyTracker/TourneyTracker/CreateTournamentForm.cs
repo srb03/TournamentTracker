@@ -25,7 +25,7 @@ namespace TourneyTracker
 
         private void NewTeamLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            CreateTeamForm frm = new CreateTeamForm();
+            CreateTeamForm frm = new CreateTeamForm(this);
             frm.Show();
         }
 

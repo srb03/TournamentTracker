@@ -200,6 +200,7 @@
             this.CreateMemberButton.TabIndex = 20;
             this.CreateMemberButton.Text = "Create Member";
             this.CreateMemberButton.UseVisualStyleBackColor = true;
+            this.CreateMemberButton.Click += new System.EventHandler(this.CreateMemberButton_Click);
             // 
             // TeamMembersSelectedListBox
             // 

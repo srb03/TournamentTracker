@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TournamentTrackerLibrary.Models;
+using TournamentTrackerLibrary;
 
 namespace TourneyTracker
 {
@@ -18,6 +20,26 @@ namespace TourneyTracker
             InitializeComponent();
 
             callingForm = caller;
+        }
+
+        private void CreateMemberButton_Click(object sender, EventArgs e)
+        {
+            // TODO - Validate every fucking field
+            string firstName = FirstNameTextBox.Text;
+            string lastName = LastNameTextBox.Text;
+            string emailAddress = EmailTextBox.Text;
+            string cellphoneNumber = PhoneNumberTextBox.Text;
+            
+            PersonModel person = new PersonModel();
+            
+            person.FirstName = firstName;
+            person.LastName = lastName;
+            person.EmailAddress = emailAddress;
+            person.CellphoneNumber = cellphoneNumber;
+
+            GlobalConfig.Connection.CreatePerson(person);
+
+            this.Close();
         }
     }
 }

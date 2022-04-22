@@ -12,6 +12,11 @@ namespace TournamentTrackerLibrary.Models
     public class PersonModel
     {
         /// <summary>
+        /// The unique identifier for the person.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// First name of the person.
         /// </summary>
         public string FirstName { get; set; }

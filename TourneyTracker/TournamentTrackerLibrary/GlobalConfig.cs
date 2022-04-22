@@ -10,7 +10,7 @@ namespace TournamentTrackerLibrary
 {
     public static class GlobalConfig
     {
-        static IDataConnection Connection { get; set; }
+        public static IDataConnection Connection { get; set; }
 
         public static void InitializeConnection()
         {
