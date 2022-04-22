@@ -15,11 +15,11 @@ namespace TourneyTracker
     {
         IPrizeRequester callingForm;
         decimal PrizeAmountValue = 0;
-        public CreatePrizeForm(/*IPrizeRequester caller*/)
+        public CreatePrizeForm(IPrizeRequester caller)
         {
             InitializeComponent();
 
-            //callingForm = caller;
+            callingForm = caller;
 
             // Populate Prize place combo box
             FillPrizePlaceComboBox();
@@ -98,8 +98,6 @@ namespace TourneyTracker
 
         private void CreatePrizeButton_Click(object sender, EventArgs e)
         {
-            
-            
             string errorMessage = ValidateData();
             if (errorMessage.Length == 0)
             {
@@ -116,6 +114,7 @@ namespace TourneyTracker
                     prizePercent = double.Parse(PrizePercentNumericUpDown.Value.ToString());
                 }
                 PrizeModel prize = new PrizeModel(placeNumber, placeName, prizeAmount, prizePercent);
+                callingForm.CompletePrize(prize);
             }
             else
             {
@@ -127,7 +126,7 @@ namespace TourneyTracker
                 return;
             }
 
-            MessageBox.Show("BIEN LLEGASTE HASTE EL FINAL", "SUCCESS", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
         }
 
         private string ValidateData()

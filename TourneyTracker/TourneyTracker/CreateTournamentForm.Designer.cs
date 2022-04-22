@@ -86,6 +86,7 @@
             this.EntryFeeTextBox.Size = new System.Drawing.Size(108, 35);
             this.EntryFeeTextBox.TabIndex = 6;
             this.EntryFeeTextBox.Text = "$ 0.00";
+            this.EntryFeeTextBox.Leave += new System.EventHandler(this.EntryFeeTextBox_Leave);
             // 
             // EntryFeeLabel
             // 
@@ -222,7 +223,7 @@
             this.CreateTournamentButton.Text = "Create Tournament";
             this.CreateTournamentButton.UseVisualStyleBackColor = true;
             // 
-            // NewTournamentForm
+            // CreateTournamentForm
             // 
             this.AcceptButton = this.CreateTournamentButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -247,7 +248,7 @@
             this.Controls.Add(this.TitleHeaderLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "NewTournamentForm";
+            this.Name = "CreateTournamentForm";
             this.Text = "New Tournament";
             this.ResumeLayout(false);
             this.PerformLayout();

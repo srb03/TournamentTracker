@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TournamentTrackerLibrary;
 
 namespace TourneyTracker
 {
@@ -16,7 +17,8 @@ namespace TourneyTracker
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CreatePrizeForm());
+            GlobalConfig.InitializeConnection();
+            Application.Run(new CreateTournamentForm());
         }
     }
 }

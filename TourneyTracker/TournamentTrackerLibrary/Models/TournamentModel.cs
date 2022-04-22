@@ -27,16 +27,16 @@ namespace TournamentTrackerLibrary.Models
         /// <summary>
         /// The teams that play in the tournament.
         /// </summary>
-        List<TeamModel> EnteredTeams = new List<TeamModel>();
+        public List<TeamModel> EnteredTeams = new List<TeamModel>();
 
         /// <summary>
         /// List of prizes for the winner of the tournament.
         /// </summary>
-        List<PrizeModel> Prizes = new List<PrizeModel>();
+        public List<PrizeModel> Prizes = new List<PrizeModel>();
 
         /// <summary>
         /// The rounds of the tournament. Each List is a round so the List of list are all the rounds.
         /// </summary>
-        List<List<MatchupModel>> Rounds = new List<List<MatchupModel>>();
+        public List<List<MatchupModel>> Rounds = new List<List<MatchupModel>>();
     }
 }

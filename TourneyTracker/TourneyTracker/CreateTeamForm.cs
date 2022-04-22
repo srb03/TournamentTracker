@@ -12,9 +12,12 @@ namespace TourneyTracker
 {
     public partial class CreateTeamForm : Form
     {
-        public CreateTeamForm()
+        ITeamRequester callingForm;
+        public CreateTeamForm(ITeamRequester caller)
         {
             InitializeComponent();
+
+            callingForm = caller;
         }
     }
 }

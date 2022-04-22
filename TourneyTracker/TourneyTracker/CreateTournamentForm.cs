@@ -11,9 +11,12 @@ using TournamentTrackerLibrary.Models;
 
 namespace TourneyTracker
 {
-    public partial class CreateTournamentForm : Form, IPrizeRequester
+    public partial class CreateTournamentForm : Form, IPrizeRequester, ITeamRequester
     {
+        TournamentModel tournament = new TournamentModel();
         List<PrizeModel> selectedPrizes = new List<PrizeModel>();
+
+        decimal entryFeeValue = 0;
 
         public CreateTournamentForm()
         {
@@ -28,13 +31,57 @@ namespace TourneyTracker
 
         private void NewPrizeButton_Click(object sender, EventArgs e)
         {
-            CreatePrizeForm frm = new CreatePrizeForm();
+            CreatePrizeForm frm = new CreatePrizeForm(this);
             frm.Show();
         }
 
-        public void PrizeComplete(PrizeModel prize)
+        public void CompletePrize(PrizeModel prize)
         {
-            selectedPrizes.Add(prize);
+            tournament.Prizes.Add(prize);
+        }
+
+        private void EntryFeeTextBox_Leave(object sender, EventArgs e)
+        {
+            if (ValidateEntryFee())
+            {
+                EntryFeeTextBox.Text = string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", entryFeeValue);
+            }
+            else
+            {
+                MessageBox.Show(
+                    "The entry fee is not valid.",
+                    "Invalid entry fee",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+
+                EntryFeeTextBox.Text = string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", 0);
+            }
+        }
+
+        private bool ValidateEntryFee()
+        {
+            bool output = true;
+
+            string EntryFeeString = EntryFeeTextBox.Text;
+            try
+            {
+                entryFeeValue = Decimal.Parse(EntryFeeString, System.Globalization.NumberStyles.Currency);
+            }
+            catch
+            {
+                output = false;
+            }
+
+            if (entryFeeValue < 0)
+            {
+                output = false;
+            }
+            return output;
+        }
+
+        public void CompleteTeam(TeamModel team)
+        {
+            tournament.EnteredTeams.Add(team);
         }
     }
 }

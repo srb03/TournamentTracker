@@ -7,8 +7,8 @@ using TournamentTrackerLibrary.Models;
 
 namespace TourneyTracker
 {
-    public interface IPrizeRequester
+    public interface ITeamRequester
     {
-        void CompletePrize(PrizeModel model);
+        void CompleteTeam(TeamModel team);
     }
 }
