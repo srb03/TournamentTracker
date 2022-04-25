@@ -12,6 +12,11 @@ namespace TournamentTrackerLibrary.Models
     public class TeamModel
     {
         /// <summary>
+        /// The unique identifier for the team.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// The team name.
         /// </summary>
         public string TeamName { get; set; }

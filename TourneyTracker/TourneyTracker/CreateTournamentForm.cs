@@ -15,6 +15,7 @@ namespace TourneyTracker
     {
         TournamentModel tournament = new TournamentModel();
         List<PrizeModel> selectedPrizes = new List<PrizeModel>();
+        List<TeamModel> selectedTeams = new List<TeamModel>();
 
         decimal entryFeeValue = 0;
 
@@ -25,7 +26,7 @@ namespace TourneyTracker
 
         private void NewTeamLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            CreateTeamForm frm = new CreateTeamForm(this);
+            CreateTeamForm frm = new CreateTeamForm(this, selectedTeams);
             frm.Show();
         }
 

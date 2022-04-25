@@ -10,5 +10,7 @@ namespace TournamentTrackerLibrary.DataAccess
     public interface IDataConnection
     {
         void CreatePerson(PersonModel person);
+        List<PersonModel> GetPerson_All();
+        void CreateTeam(TeamModel team);
     }
 }

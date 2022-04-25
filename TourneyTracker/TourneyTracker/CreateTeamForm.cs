@@ -16,12 +16,61 @@ namespace TourneyTracker
 {
     public partial class CreateTeamForm : Form
     {
-        ITeamRequester callingForm;
-        public CreateTeamForm(ITeamRequester caller)
+        enum ErrorMessage
         {
+            Success,
+            NoTeamName,
+            IncompleteTeamMember,
+            NoTeamMembersSelected
+        }
+
+        ITeamRequester callingForm;
+
+        // Get all the persons from the database
+        List<PersonModel> availableTeamMember = GlobalConfig.Connection.GetPerson_All();
+
+        // This is the team model that will be returned to the CreateTournament form
+        TeamModel newTeam = new TeamModel();
+
+        public CreateTeamForm(ITeamRequester caller, List<TeamModel> selectedTeams)
+        {
+            // Save in a local variable the entire form to use the method CompleteTeam.
             InitializeComponent();
 
             callingForm = caller;
+
+            WireUpSelectTeamMemberComboBox();
+
+            WireUpSelectedTeamMembersListBox();
+
+            GetAvailableTeamMembers(selectedTeams);
+        }
+
+        // Get the selected teams with their members as parameter .
+        // Then it will remove the team members picked up for another team from the availableTeamMember list.
+        private void GetAvailableTeamMembers(List<TeamModel> selectedTeams)
+        {
+            foreach (TeamModel team in selectedTeams)
+            {
+                foreach (PersonModel person in team.TeamMembers)
+                {
+                    availableTeamMember.Remove(person);
+                }
+            }
+        }
+
+        private void WireUpSelectTeamMemberComboBox()
+        {
+            SelectTeamMemberComboBox.DataSource = null;
+            SelectTeamMemberComboBox.DataSource = availableTeamMember;
+            SelectTeamMemberComboBox.DisplayMember = "FullName";
+        }
+
+        private void WireUpSelectedTeamMembersListBox()
+        {
+            TeamMembersSelectedListBox.DataSource = null;
+            TeamMembersSelectedListBox.DataSource = newTeam.TeamMembers;
+            TeamMembersSelectedListBox.DisplayMember = "FullName";
         }
 
         private void CreateMemberButton_Click(object sender, EventArgs e)
@@ -50,6 +99,11 @@ namespace TourneyTracker
 
             GlobalConfig.Connection.CreatePerson(person);
 
+            newTeam.TeamMembers.Add(person);
+            // Update de TeamMembersSelectedListBox
+            WireUpSelectedTeamMembersListBox();
+
+            // Clean the form
             FirstNameTextBox.Text = "";
             LastNameTextBox.Text = "";
             EmailTextBox.Text = "";
@@ -174,7 +228,157 @@ namespace TourneyTracker
 
         private void CreateTeamButton_Click(object sender, EventArgs e)
         {
+            switch (ValidateCreateTeam())
+            {
+                case ErrorMessage.Success:
+                    CreateTeam();
+                    break;
 
+                case ErrorMessage.NoTeamName:
+                    MessageBox.Show("There must be a name for the team.", "No Team Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+
+                case ErrorMessage.IncompleteTeamMember:
+                    DialogResult dResult = MessageBox.Show("It seems that you want to create a team member but doesn't complete it. Are you sure you want yo continue?", "No Team Name", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dResult == DialogResult.No)
+                    {
+                        break;
+                    }
+                    CreateTeam();
+                    break;
+
+                case ErrorMessage.NoTeamMembersSelected:
+                    dResult = MessageBox.Show("You have no added team members to this team. Are you sure you want yo continue?", "Incomplete team member", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dResult == DialogResult.No)
+                    {
+                        break;
+                    }
+                    CreateTeam();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void CreateTeam()
+        {
+            // Set the team name
+            newTeam.TeamName = TeamNameTextBox.Text.Trim();
+
+            // There is no need to set the TeamMembers list because that is 
+            // done everytime an team member is added or created.
+
+            // We save the team in the data base.
+            GlobalConfig.Connection.CreateTeam(newTeam);
+
+
+            // Use the function CompleteTeam in the CreateTournament form.
+            callingForm.CompleteTeam(newTeam);
+
+            this.Close();
+        }
+
+        private ErrorMessage ValidateCreateTeam()
+        {
+            ErrorMessage error = ErrorMessage.Success;
+
+            if (!IsName())
+            {
+                error = ErrorMessage.NoTeamName;
+            }
+            else if (IncompleteTeamMember())
+            {
+                error = ErrorMessage.IncompleteTeamMember;
+            }
+            else if (newTeam.TeamMembers.Count == 0)
+            {
+                error = ErrorMessage.NoTeamMembersSelected;
+            }
+
+            return error;
+        }
+
+        // True if there's some data in the form to create a new team member
+        private bool IncompleteTeamMember()
+        {
+            if (FirstNameTextBox.Text.Trim().Length > 0 || 
+                LastNameTextBox.Text.Trim().Length > 0 || 
+                EmailTextBox.Text.Trim().Length > 0 || 
+                PhoneNumberTextBox.Text.Trim().Length > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void AddTeamMemberButton_Click(object sender, EventArgs e)
+        {
+            // Get the person selected in the combo box
+            PersonModel person = (PersonModel)SelectTeamMemberComboBox.SelectedItem;
+
+            if (person != null)
+            {
+                // Remove it from the list of availble people
+                availableTeamMember.Remove(person);
+
+                // Add it to the list of person of this new team
+                newTeam.TeamMembers.Add(person);
+
+                // Refresh the combo box and the list box
+                WireUpSelectTeamMemberComboBox();
+                WireUpSelectedTeamMembersListBox(); 
+            }
+            else
+            {
+                MessageBox.Show(
+                    "There is no person selected. You must select a person to add it to the team.",
+                    "Error: Add person to the team",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private void RemoveTeamMemberSelectedButton_Click(object sender, EventArgs e)
+        {
+            // Get the person selected in the list box
+            PersonModel person = (PersonModel)TeamMembersSelectedListBox.SelectedItem;
+
+            if (person != null)
+            {
+                // Remove it from the list of selected people
+                newTeam.TeamMembers.Remove(person);
+
+                // Add it to the list of person available
+                availableTeamMember.Add(person);
+
+                // Refresh the combo box and the list box
+                WireUpSelectTeamMemberComboBox();
+                WireUpSelectedTeamMembersListBox();
+            }
+            else
+            {
+                MessageBox.Show(
+                    "There is no person selected. You must select a person to remove from the list.", 
+                    "Error: Remove person", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
+            }
+        }
+
+        private bool IsName()
+        {
+            if (TeamNameTextBox.Text.Length > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -84,11 +84,11 @@
             // 
             // SelectTeamMemberComboBox
             // 
-            this.SelectTeamMemberComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SelectTeamMemberComboBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SelectTeamMemberComboBox.FormattingEnabled = true;
             this.SelectTeamMemberComboBox.Location = new System.Drawing.Point(20, 188);
             this.SelectTeamMemberComboBox.Name = "SelectTeamMemberComboBox";
-            this.SelectTeamMemberComboBox.Size = new System.Drawing.Size(307, 33);
+            this.SelectTeamMemberComboBox.Size = new System.Drawing.Size(307, 38);
             this.SelectTeamMemberComboBox.TabIndex = 2;
             // 
             // SelectTeamMemberLabel
@@ -207,10 +207,12 @@
             this.TeamMembersSelectedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TeamMembersSelectedListBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TeamMembersSelectedListBox.FormattingEnabled = true;
+            this.TeamMembersSelectedListBox.ItemHeight = 30;
             this.TeamMembersSelectedListBox.Location = new System.Drawing.Point(382, 106);
             this.TeamMembersSelectedListBox.Name = "TeamMembersSelectedListBox";
-            this.TeamMembersSelectedListBox.Size = new System.Drawing.Size(299, 459);
+            this.TeamMembersSelectedListBox.Size = new System.Drawing.Size(299, 454);
             this.TeamMembersSelectedListBox.TabIndex = 20;
             // 
             // RemoveTeamMemberSelectedButton
@@ -222,6 +224,7 @@
             this.RemoveTeamMemberSelectedButton.TabIndex = 21;
             this.RemoveTeamMemberSelectedButton.Text = "Remove Selected";
             this.RemoveTeamMemberSelectedButton.UseVisualStyleBackColor = true;
+            this.RemoveTeamMemberSelectedButton.Click += new System.EventHandler(this.RemoveTeamMemberSelectedButton_Click);
             // 
             // TeamMembersLabel
             // 
@@ -247,12 +250,13 @@
             // AddTeamMemberButton
             // 
             this.AddTeamMemberButton.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddTeamMemberButton.Location = new System.Drawing.Point(82, 227);
+            this.AddTeamMemberButton.Location = new System.Drawing.Point(79, 232);
             this.AddTeamMemberButton.Name = "AddTeamMemberButton";
             this.AddTeamMemberButton.Size = new System.Drawing.Size(183, 45);
             this.AddTeamMemberButton.TabIndex = 3;
             this.AddTeamMemberButton.Text = "Add Team";
             this.AddTeamMemberButton.UseVisualStyleBackColor = true;
+            this.AddTeamMemberButton.Click += new System.EventHandler(this.AddTeamMemberButton_Click);
             // 
             // CreateTeamForm
             // 
