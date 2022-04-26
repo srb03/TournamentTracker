@@ -34,6 +34,8 @@ namespace TournamentTrackerLibrary.Models
         /// </summary>
         public double PrizePercent { get; set; }
 
+        public string PrizeNameInList { get { return PlaceNumber.ToString() + " - " + PrizeName; } }
+
 
         /// <summary>
         /// Constructor for the Prize. A prize will give to the winner.

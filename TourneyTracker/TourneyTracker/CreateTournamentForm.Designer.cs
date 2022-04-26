@@ -110,11 +110,11 @@
             // 
             // SelectTeamComboBox
             // 
-            this.SelectTeamComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SelectTeamComboBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SelectTeamComboBox.FormattingEnabled = true;
             this.SelectTeamComboBox.Location = new System.Drawing.Point(20, 267);
             this.SelectTeamComboBox.Name = "SelectTeamComboBox";
-            this.SelectTeamComboBox.Size = new System.Drawing.Size(307, 33);
+            this.SelectTeamComboBox.Size = new System.Drawing.Size(307, 38);
             this.SelectTeamComboBox.TabIndex = 8;
             // 
             // NewTeamLinkLabel
@@ -138,6 +138,7 @@
             this.AddTeamButton.TabIndex = 11;
             this.AddTeamButton.Text = "Add Team";
             this.AddTeamButton.UseVisualStyleBackColor = true;
+            this.AddTeamButton.Click += new System.EventHandler(this.AddTeamButton_Click);
             // 
             // NewPrizeButton
             // 
@@ -165,10 +166,12 @@
             this.TeamsSelectedMatchupsListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TeamsSelectedMatchupsListBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TeamsSelectedMatchupsListBox.FormattingEnabled = true;
+            this.TeamsSelectedMatchupsListBox.ItemHeight = 30;
             this.TeamsSelectedMatchupsListBox.Location = new System.Drawing.Point(409, 125);
             this.TeamsSelectedMatchupsListBox.Name = "TeamsSelectedMatchupsListBox";
-            this.TeamsSelectedMatchupsListBox.Size = new System.Drawing.Size(275, 108);
+            this.TeamsSelectedMatchupsListBox.Size = new System.Drawing.Size(275, 154);
             this.TeamsSelectedMatchupsListBox.TabIndex = 14;
             // 
             // RemoveTeamsSelectedButton
@@ -181,6 +184,7 @@
             this.RemoveTeamsSelectedButton.TabIndex = 15;
             this.RemoveTeamsSelectedButton.Text = "Remove Selected";
             this.RemoveTeamsSelectedButton.UseVisualStyleBackColor = true;
+            this.RemoveTeamsSelectedButton.Click += new System.EventHandler(this.RemoveTeamsSelectedButton_Click);
             // 
             // RemovePrizesCreatedButton
             // 
@@ -192,22 +196,25 @@
             this.RemovePrizesCreatedButton.TabIndex = 18;
             this.RemovePrizesCreatedButton.Text = "Remove Selected";
             this.RemovePrizesCreatedButton.UseVisualStyleBackColor = true;
+            this.RemovePrizesCreatedButton.Click += new System.EventHandler(this.RemovePrizesCreatedButton_Click);
             // 
             // PrizesCreatedListBox
             // 
             this.PrizesCreatedListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.PrizesCreatedListBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PrizesCreatedListBox.FormattingEnabled = true;
-            this.PrizesCreatedListBox.Location = new System.Drawing.Point(409, 298);
+            this.PrizesCreatedListBox.ItemHeight = 30;
+            this.PrizesCreatedListBox.Location = new System.Drawing.Point(409, 329);
             this.PrizesCreatedListBox.Name = "PrizesCreatedListBox";
-            this.PrizesCreatedListBox.Size = new System.Drawing.Size(275, 108);
+            this.PrizesCreatedListBox.Size = new System.Drawing.Size(275, 94);
             this.PrizesCreatedListBox.TabIndex = 17;
             // 
             // PrizesCreatedLabel
             // 
             this.PrizesCreatedLabel.AutoSize = true;
             this.PrizesCreatedLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PrizesCreatedLabel.Location = new System.Drawing.Point(404, 265);
+            this.PrizesCreatedLabel.Location = new System.Drawing.Point(404, 296);
             this.PrizesCreatedLabel.Name = "PrizesCreatedLabel";
             this.PrizesCreatedLabel.Size = new System.Drawing.Size(67, 30);
             this.PrizesCreatedLabel.TabIndex = 16;
@@ -222,6 +229,7 @@
             this.CreateTournamentButton.TabIndex = 19;
             this.CreateTournamentButton.Text = "Create Tournament";
             this.CreateTournamentButton.UseVisualStyleBackColor = true;
+            this.CreateTournamentButton.Click += new System.EventHandler(this.CreateTournamentButton_Click);
             // 
             // CreateTournamentForm
             // 

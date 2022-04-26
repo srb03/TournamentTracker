@@ -71,5 +71,46 @@ namespace TournamentTrackerLibrary.DataAccess
                 }
             }
         }
+
+        // Return all the teams in the database.
+        // The team object includes the team members.
+        public List<TeamModel> GetTeam_All()
+        {
+            List<TeamModel> allTeams = new List<TeamModel>();
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                // spTeam_GetAll
+                allTeams = connection.Query<TeamModel>("dbo.spTeam_GetAll").ToList();
+
+                foreach (TeamModel team in allTeams)
+                {
+                    var p = new DynamicParameters();
+                    p.Add("@Team", team.Id);
+
+                    team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMembers_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
+                }
+            }
+
+            return allTeams;
+        }
+
+        // Create the tournament in the database and return the Id for the tournament
+        public void CreateTournament(TournamentModel tournament)
+        {
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                // spTournament_Insert @TournamentName, @EntryFee, @Id -> output
+                var p = new DynamicParameters();
+                p.Add("@TournamentName", tournament.TournamentName);
+                p.Add("@EntryFee", tournament.EntryFee);
+
+                p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+                connection.Execute("dbo.spTournament_Insert", p, commandType: CommandType.StoredProcedure);
+
+                tournament.Id = p.Get<int>("@Id");
+            }
+        }
     }
 }
