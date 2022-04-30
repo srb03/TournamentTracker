@@ -212,6 +212,7 @@ namespace TourneyTracker
             switch (ValidateData())
             {
                 case ErrorMessage.Success:
+                    CreateTournament();
                     break;
 
                 case ErrorMessage.NoTournamentName:
@@ -259,7 +260,8 @@ namespace TourneyTracker
             newTournament.TournamentName = TournamentNameTextBox.Text.Trim();
             newTournament.EntryFee = entryFeeValue;
 
-            GlobalConfig.Connection.CreateTournament(newTournament);
+            newTournament.CreateRounds();
+            //GlobalConfig.Connection.CreateTournament(newTournament);
 
             this.Close();
         }

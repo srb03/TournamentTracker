@@ -26,6 +26,6 @@ namespace TournamentTrackerLibrary.Models
         /// The matchup the team competing came from.
         /// Every match has a parent matchup except for the matchups in the first round.
         /// </summary>
-        public TeamModel ParentMatchup { get; set; }
+        public MatchupModel ParentMatchup { get; set; }
     }
 }

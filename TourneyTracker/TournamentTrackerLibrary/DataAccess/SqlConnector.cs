@@ -95,22 +95,28 @@ namespace TournamentTrackerLibrary.DataAccess
             return allTeams;
         }
 
-        // Create the tournament in the database and return the Id for the tournament
+        // Save the tournament, the prizes, the teams
         public void CreateTournament(TournamentModel tournament)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
             {
-                // spTournament_Insert @TournamentName, @EntryFee, @Id -> output
-                var p = new DynamicParameters();
-                p.Add("@TournamentName", tournament.TournamentName);
-                p.Add("@EntryFee", tournament.EntryFee);
-
-                p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-
-                connection.Execute("dbo.spTournament_Insert", p, commandType: CommandType.StoredProcedure);
-
-                tournament.Id = p.Get<int>("@Id");
+                
             }
+        }
+
+        // Create the tournament in the database and return the Id for the tournament
+        private void SaveTournament(IDbConnection connection, TournamentModel tournament)
+        {
+            // spTournament_Insert @TournamentName, @EntryFee, @Id -> output
+            var p = new DynamicParameters();
+            p.Add("@TournamentName", tournament.TournamentName);
+            p.Add("@EntryFee", tournament.EntryFee);
+
+            p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+            connection.Execute("dbo.spTournament_Insert", p, commandType: CommandType.StoredProcedure);
+
+            tournament.Id = p.Get<int>("@Id");
         }
     }
 }
