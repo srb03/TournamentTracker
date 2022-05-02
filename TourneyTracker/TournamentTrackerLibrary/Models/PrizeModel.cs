@@ -12,6 +12,11 @@ namespace TournamentTrackerLibrary.Models
     public class PrizeModel
     {
         /// <summary>
+        /// The unique identifier for the prize.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// The numeric place for the winner of this prize: 1 for first place, 2 for second place.
         /// </summary>
         public int PlaceNumber { get; set; }

@@ -13,6 +13,11 @@ namespace TournamentTrackerLibrary.Models
     public class MatchupEntryModel
     {
         /// <summary>
+        /// The unique identifier for the matchup entry.
+        /// </summary>
+        public int Id { get; set; }
+
+        /// <summary>
         /// The team competing in a matchup.
         /// </summary>
         public TeamModel TeamCompeting { get; set; }
@@ -27,5 +32,11 @@ namespace TournamentTrackerLibrary.Models
         /// Every match has a parent matchup except for the matchups in the first round.
         /// </summary>
         public MatchupModel ParentMatchup { get; set; }
+
+        public MatchupEntryModel()
+        {
+            TeamCompeting = null;
+            ParentMatchup = null;
+        }
     }
 }

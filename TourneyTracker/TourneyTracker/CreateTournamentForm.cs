@@ -249,7 +249,6 @@ namespace TourneyTracker
                     CreateTournament();
                     break;
 
-
                 default:
                     break;
             }
@@ -261,7 +260,7 @@ namespace TourneyTracker
             newTournament.EntryFee = entryFeeValue;
 
             newTournament.CreateRounds();
-            //GlobalConfig.Connection.CreateTournament(newTournament);
+            GlobalConfig.Connection.CreateTournament(newTournament);
 
             this.Close();
         }
