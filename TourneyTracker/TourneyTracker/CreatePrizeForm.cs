@@ -13,6 +13,15 @@ namespace TourneyTracker
 {
     public partial class CreatePrizeForm : Form
     {
+        enum ErrorMessage
+        {
+            Success,
+            NoPrizePlaceSelected,
+            NoPlaceName,
+            NoPrizeAmount,
+            NoPrizePercent
+        }
+
         IPrizeRequester callingForm;
         decimal PrizeAmountValue = 0;
         public CreatePrizeForm(IPrizeRequester caller)
@@ -98,52 +107,96 @@ namespace TourneyTracker
 
         private void CreatePrizeButton_Click(object sender, EventArgs e)
         {
-            string errorMessage = ValidateData();
-            if (errorMessage.Length == 0)
+            ErrorMessage errorMessage = ValidateData();
+            switch (ValidateData())
             {
-                int placeNumber = (int)PrizePlaceComboBox.SelectedItem;
-                string placeName = PlaceNameTextBox.Text;
-                decimal prizeAmount = 0;
-                double prizePercent = 0;
-                if (PrizeAmountRadioButton.Checked)
-                {
-                    prizeAmount = Decimal.Parse(PrizeAmountTextBox.Text, System.Globalization.NumberStyles.Currency);
-                }
-                else
-                {
-                    prizePercent = double.Parse(PrizePercentNumericUpDown.Value.ToString());
-                }
-                PrizeModel prize = new PrizeModel(placeNumber, placeName, prizeAmount, prizePercent);
-                callingForm.CompletePrize(prize);
+                case ErrorMessage.Success:
+                    CreatePrize();
+                    break;
+
+                case ErrorMessage.NoPrizePlaceSelected:
+                    MessageBox.Show(
+                    "You must select a place number for the prize.",
+                    "No place selected",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                    break;
+
+                case ErrorMessage.NoPlaceName:
+                    DialogResult dResult = MessageBox.Show(
+                        "You not named this prize. You want to continue?", 
+                        "No prize name",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+                    if (dResult == DialogResult.Yes)
+                    {
+                        CreatePrize();
+                    }
+                    break;
+
+                case ErrorMessage.NoPrizeAmount:
+                    MessageBox.Show(
+                        "The prize amount you set is not valid.", 
+                        "Invalid prize amount",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    
+                    break;
+
+                case ErrorMessage.NoPrizePercent:
+                    MessageBox.Show(
+                        "The prize percent you set is not valid.", 
+                        "Invalid prize percent",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void CreatePrize()
+        {
+            int placeNumber = (int)PrizePlaceComboBox.SelectedItem;
+            string placeName = PlaceNameTextBox.Text;
+            decimal prizeAmount = 0;
+            double prizePercent = 0;
+            if (PrizeAmountRadioButton.Checked)
+            {
+                prizeAmount = Decimal.Parse(PrizeAmountTextBox.Text, System.Globalization.NumberStyles.Currency);
             }
             else
             {
-                MessageBox.Show(
-                    errorMessage,
-                    "Input Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-                return;
+                prizePercent = double.Parse(PrizePercentNumericUpDown.Value.ToString());
             }
+            
+            PrizeModel prize = new PrizeModel(placeNumber, placeName, prizeAmount, prizePercent);
+            
+            callingForm.CompletePrize(prize);
 
             this.Close();
         }
 
-        private string ValidateData()
+        private ErrorMessage ValidateData()
         {
-            string output = "";
+            ErrorMessage output = ErrorMessage.Success;
 
-            if (string.IsNullOrEmpty(PlaceNameTextBox.Text.Trim()))
+            if (PrizePlaceComboBox.SelectedItem == null)
             {
-                output = "You need to put a Place Name";
+                output = ErrorMessage.NoPrizePlaceSelected;
+            }
+            else if (string.IsNullOrEmpty(PlaceNameTextBox.Text.Trim()))
+            {
+                output = ErrorMessage.NoPlaceName;
             }
             else if (PrizeAmountRadioButton.Checked && !ValidatePrizeAmount())
             {
-                output = "The prize amount is not valid.";
+                output = ErrorMessage.NoPrizeAmount;
             }
             else if (PrizePercentRadioButton.Checked && (PrizePercentNumericUpDown.Value < 0 && PrizePercentNumericUpDown.Value > 100))
             {
-                output = "The prize percent is not valida. Must be a value between 0 and 100";
+                output = ErrorMessage.NoPrizePercent;
             }
 
             return output;

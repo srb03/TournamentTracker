@@ -250,7 +250,11 @@ namespace TournamentTrackerLibrary.DataAccess
             }
         }
 
-        // Create the tournament in the database and return the Id for the tournament
+        /// <summary>
+        /// Create the tournament in the database and return the Id for the tournament
+        /// </summary>
+        /// <param name="connection">The connection to the database.</param>
+        /// <param name="tournament">The tournament.</param>
         private void SaveTournament(IDbConnection connection, TournamentModel tournament)
         {
             // spTournament_Insert @TournamentName, @EntryFee, @Id -> output
@@ -291,6 +295,12 @@ namespace TournamentTrackerLibrary.DataAccess
             return allTournament;
         }
 
+        /// <summary>
+        /// Get the rounds of the tournament.
+        /// </summary>
+        /// <param name="connection">The connection to the database.</param>
+        /// <param name="tournamentId">The tournament id.</param>
+        /// <returns>List conatining the list of each round.</returns>
         private List<List<MatchupModel>> GetMatchupsByTournament(IDbConnection connection, int tournamentId)
         {
             List<MatchupModel> allTournamentMatchups = new List<MatchupModel>();
@@ -328,6 +338,11 @@ namespace TournamentTrackerLibrary.DataAccess
             return DivideMatchupsInRounds(allTournamentMatchups);
         }
 
+        /// <summary>
+        /// Divide the matchups in lists dividing using the round matchup.
+        /// </summary>
+        /// <param name="matchups">The list with all the matchups.</param>
+        /// <returns>The rounds of the tournament. Each list inside the list is a round.</returns>
         private List<List<MatchupModel>> DivideMatchupsInRounds(List<MatchupModel> matchups)
         {
             List<List<MatchupModel>> rounds = new List<List<MatchupModel>>();
