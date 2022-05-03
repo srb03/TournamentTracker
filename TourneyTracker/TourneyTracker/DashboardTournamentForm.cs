@@ -7,20 +7,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TournamentTrackerLibrary;
+using TournamentTrackerLibrary.Models;
 
 namespace TourneyTracker
 {
     public partial class DashboardTournamentForm : Form
     {
+        List<TournamentModel> availableTournament = GlobalConfig.Connection.GetTournament_All();
+
         public DashboardTournamentForm()
         {
             InitializeComponent();
+
+            WireUpAvailableTournamentComboBox();
+        }
+
+        private void WireUpAvailableTournamentComboBox()
+        {
+            AvailableTournamentsComboBox.DataSource = null;
+            AvailableTournamentsComboBox.DataSource = availableTournament;
+            AvailableTournamentsComboBox.DisplayMember = "TournamentName";
         }
 
         private void LoadTournamentButton_Click(object sender, EventArgs e)
         {
             TournamentViewerForm frm = new TournamentViewerForm();
-            //this.Enabled = false;
             frm.Show();
         }
 

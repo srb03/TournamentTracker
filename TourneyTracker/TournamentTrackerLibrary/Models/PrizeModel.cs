@@ -24,7 +24,7 @@ namespace TournamentTrackerLibrary.Models
         /// <summary>
         /// The name of the prize like "First place", "Champion" or "Runner up".
         /// </summary>
-        public string PrizeName { get; set; }
+        public string PlaceName { get; set; }
 
 
         /// <summary>
@@ -37,9 +37,9 @@ namespace TournamentTrackerLibrary.Models
         /// The percent of the total entry fee acumulated the winner of the prize will receive.
         /// If this prop is setting then the PrizeAmount prop must be 0.
         /// </summary>
-        public double PrizePercent { get; set; }
+        public double PrizePercentage { get; set; }
 
-        public string PrizeNameInList { get { return PlaceNumber.ToString() + " - " + PrizeName; } }
+        public string PrizeNameInList { get { return PlaceNumber.ToString() + " - " + PlaceName; } }
 
 
         /// <summary>
@@ -52,9 +52,14 @@ namespace TournamentTrackerLibrary.Models
         public PrizeModel(int placeNumber, string placeName, decimal prizeAmount, double prizePercent)
         {
             PlaceNumber = placeNumber;
-            PrizeName = placeName;
+            PlaceName = placeName;
             PrizeAmount = prizeAmount;
-            PrizePercent = prizePercent;
+            PrizePercentage = prizePercent;
+        }
+
+        public PrizeModel()
+        {
+
         }
     }
 }

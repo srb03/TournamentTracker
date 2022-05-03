@@ -18,7 +18,7 @@ namespace TourneyTracker
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             GlobalConfig.InitializeConnection();
-            Application.Run(new CreateTournamentForm());
+            Application.Run(new DashboardTournamentForm());
         }
     }
 }

@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DashboardTournamentForm));
             this.TitleHeaderLabel = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.AvailableTournamentsComboBox = new System.Windows.Forms.ComboBox();
             this.LoadTournamentButton = new System.Windows.Forms.Button();
             this.CreateTournamentButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -45,13 +45,13 @@
             this.TitleHeaderLabel.TabIndex = 0;
             this.TitleHeaderLabel.Text = "Tournament Tracker";
             // 
-            // comboBox1
+            // AvailableTournamentsComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(140, 101);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(297, 38);
-            this.comboBox1.TabIndex = 1;
+            this.AvailableTournamentsComboBox.FormattingEnabled = true;
+            this.AvailableTournamentsComboBox.Location = new System.Drawing.Point(140, 101);
+            this.AvailableTournamentsComboBox.Name = "AvailableTournamentsComboBox";
+            this.AvailableTournamentsComboBox.Size = new System.Drawing.Size(297, 38);
+            this.AvailableTournamentsComboBox.TabIndex = 1;
             // 
             // LoadTournamentButton
             // 
@@ -80,7 +80,7 @@
             this.ClientSize = new System.Drawing.Size(568, 321);
             this.Controls.Add(this.CreateTournamentButton);
             this.Controls.Add(this.LoadTournamentButton);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.AvailableTournamentsComboBox);
             this.Controls.Add(this.TitleHeaderLabel);
             this.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -96,7 +96,7 @@
         #endregion
 
         private System.Windows.Forms.Label TitleHeaderLabel;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox AvailableTournamentsComboBox;
         private System.Windows.Forms.Button LoadTournamentButton;
         private System.Windows.Forms.Button CreateTournamentButton;
     }

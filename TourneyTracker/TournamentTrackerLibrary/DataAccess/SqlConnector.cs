@@ -238,9 +238,9 @@ namespace TournamentTrackerLibrary.DataAccess
                 // spPrizezs_Insert @PlaceNumber @PlaceName @PrizeAmount @PrizePercentage @Id = output
                 var p = new DynamicParameters();
                 p.Add("@PlaceNumber", prize.PlaceNumber);
-                p.Add("@PlaceName", prize.PrizeName);
+                p.Add("@PlaceName", prize.PlaceName);
                 p.Add("@PrizeAmount", prize.PrizeAmount);
-                p.Add("@PrizePercentage", prize.PrizePercent);
+                p.Add("@PrizePercentage", prize.PrizePercentage);
 
                 p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
 
@@ -264,5 +264,133 @@ namespace TournamentTrackerLibrary.DataAccess
 
             tournament.Id = p.Get<int>("@Id");
         }
+
+
+        /// <summary>
+        /// Get all the tournament in active from the databse.
+        /// </summary>
+        /// <returns>A list of all the tournaments with prizes, teams and rounds.</returns>
+        public List<TournamentModel> GetTournament_All()
+        {
+            List<TournamentModel> allTournament = new List<TournamentModel>();
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                allTournament = connection.Query<TournamentModel>("dbo.spTournament_GetAll").ToList();
+
+                foreach (TournamentModel tournament in allTournament)
+                {
+                    tournament.EnteredTeams = GetTeamsByTournament(connection, tournament.Id);
+
+                    tournament.Prizes = GetPrizesByTournament(connection, tournament.Id);
+
+                    tournament.Rounds = GetMatchupsByTournament(connection, tournament.Id);
+                }
+            }
+
+            return allTournament;
+        }
+
+        private List<List<MatchupModel>> GetMatchupsByTournament(IDbConnection connection, int tournamentId)
+        {
+            List<MatchupModel> allTournamentMatchups = new List<MatchupModel>();
+            List<MatchupEntryModel> entries = new List<MatchupEntryModel>();
+            List<TeamModel> allTeams = GetTeam_All();
+
+            var p = new DynamicParameters();
+            p.Add("@Tournament", tournamentId);
+            allTournamentMatchups = connection.Query<MatchupModel>("dbo.spMatchups_GetByTournament", p, commandType: CommandType.StoredProcedure).ToList();
+
+            foreach (MatchupModel matchup in allTournamentMatchups)
+            {
+                p = new DynamicParameters();
+                p.Add("@MatchupId", matchup.Id);
+                matchup.Entries = connection.Query<MatchupEntryModel>("dbo.spMatchupEntries_GetByMatchup", p, commandType: CommandType.StoredProcedure).ToList();
+
+                if (matchup.WinnerId >= 0)
+                {
+                    matchup.Winner = allTeams.Where(x => x.Id == matchup.WinnerId).First(); 
+                }
+
+                foreach (MatchupEntryModel entry in matchup.Entries)
+                {
+                    if (entry.TeamCompetingId >= 0)
+                    {
+                        entry.TeamCompeting = allTeams.Where(x => x.Id == entry.TeamCompetingId).First(); 
+                    }
+
+                    if (entry.ParentMatchupId > 0)
+                    {
+                        entry.ParentMatchup = allTournamentMatchups.Where(x => x.Id == entry.ParentMatchupId).First(); 
+                    }
+                }
+            }
+            return DivideMatchupsInRounds(allTournamentMatchups);
+        }
+
+        private List<List<MatchupModel>> DivideMatchupsInRounds(List<MatchupModel> matchups)
+        {
+            List<List<MatchupModel>> rounds = new List<List<MatchupModel>>();
+
+            List<MatchupModel> currentRound = new List<MatchupModel>();
+            int currentNumberRound = 1;
+
+            foreach (MatchupModel matchup in matchups)
+            {
+                if (matchup.MatchupRound > currentNumberRound)
+                {
+                    currentNumberRound = matchup.MatchupRound;
+                    rounds.Add(currentRound);
+                    currentRound = new List<MatchupModel>();
+                }
+                currentRound.Add(matchup);
+            }
+            rounds.Add(currentRound);
+            
+            return rounds;
+        }
+
+        /// <summary>
+        /// Get the teams in a tournament.
+        /// </summary>
+        /// <param name="connection">The connection to the database.</param>
+        /// <param name="tournamentId">The tournament id.</param>
+        /// <returns></returns>
+        private List<TeamModel> GetTeamsByTournament(IDbConnection connection, int tournamentId)
+        {
+            List<TeamModel> teams = new List<TeamModel>();
+
+            var p = new DynamicParameters();
+            p.Add("@Tournament", tournamentId);
+            teams = connection.Query<TeamModel>("dbo.spTeam_GetByTournament", p, commandType: CommandType.StoredProcedure).ToList();
+
+            foreach (TeamModel team in teams)
+            {
+                p = new DynamicParameters();
+                p.Add("@Team", team.Id);
+                team.TeamMembers = connection.Query<PersonModel>("dbo.spTeamMembers_GetByTeam", p, commandType: CommandType.StoredProcedure).ToList();
+            }
+
+            return teams;
+        }
+
+        /// <summary>
+        /// Get the prizes of the given tournament.
+        /// </summary>
+        /// <param name="connection">The connection to the database.</param>
+        /// <param name="tournamentId">The id of the tournament.</param>
+        /// <returns></returns>
+        public List<PrizeModel> GetPrizesByTournament(IDbConnection connection, int tournamentId)
+        {
+            List<PrizeModel> prizes = new List<PrizeModel>();
+
+            var p = new DynamicParameters();
+            p.Add("@Tournament", tournamentId);
+            prizes = connection.Query<PrizeModel>("dbo.spPrizes_GetByTournament", p, commandType: CommandType.StoredProcedure).ToList();
+
+            return prizes;
+        }
+
+
     }
 }

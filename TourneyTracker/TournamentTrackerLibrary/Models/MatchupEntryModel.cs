@@ -17,6 +17,9 @@ namespace TournamentTrackerLibrary.Models
         /// </summary>
         public int Id { get; set; }
 
+
+        public int TeamCompetingId { get; set; }
+
         /// <summary>
         /// The team competing in a matchup.
         /// </summary>
@@ -26,6 +29,8 @@ namespace TournamentTrackerLibrary.Models
         /// The score for a team in a matchup.
         /// </summary>
         public double Score { get; set; }
+
+        public int ParentMatchupId { get; set; }
 
         /// <summary>
         /// The matchup the team competing came from.

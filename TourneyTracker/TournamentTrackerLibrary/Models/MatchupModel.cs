@@ -23,6 +23,11 @@ namespace TournamentTrackerLibrary.Models
         public List<MatchupEntryModel> Entries = new List<MatchupEntryModel>();
 
         /// <summary>
+        /// The id from the database that will be used to identify the winner
+        /// </summary>
+        public int WinnerId { get; set; }
+
+        /// <summary>
         /// The winner of the matchup is recorded until the value is null.
         /// </summary>
         public TeamModel Winner { get; set; }
@@ -31,6 +36,11 @@ namespace TournamentTrackerLibrary.Models
         /// The number of the round this matchup belong.
         /// </summary>
         public int MatchupRound { get; set; }
+
+        public MatchupModel()
+        {
+            WinnerId = -1;
+        }
 
 
     }
