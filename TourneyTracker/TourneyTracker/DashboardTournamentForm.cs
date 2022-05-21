@@ -32,7 +32,9 @@ namespace TourneyTracker
 
         private void LoadTournamentButton_Click(object sender, EventArgs e)
         {
-            TournamentViewerForm frm = new TournamentViewerForm();
+            TournamentModel tournament = (TournamentModel)AvailableTournamentsComboBox.SelectedItem;
+
+            TournamentViewerForm frm = new TournamentViewerForm(tournament);
             frm.Show();
         }
 

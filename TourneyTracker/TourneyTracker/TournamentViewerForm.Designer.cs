@@ -60,6 +60,7 @@
             this.RoundsComboBox.Name = "RoundsComboBox";
             this.RoundsComboBox.Size = new System.Drawing.Size(153, 33);
             this.RoundsComboBox.TabIndex = 1;
+            this.RoundsComboBox.SelectedIndexChanged += new System.EventHandler(this.RoundsComboBox_SelectedIndexChanged);
             // 
             // RoundLabel
             // 
@@ -73,11 +74,14 @@
             // 
             // MatchupsListBox
             // 
+            this.MatchupsListBox.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MatchupsListBox.FormattingEnabled = true;
+            this.MatchupsListBox.ItemHeight = 30;
             this.MatchupsListBox.Location = new System.Drawing.Point(20, 184);
             this.MatchupsListBox.Name = "MatchupsListBox";
-            this.MatchupsListBox.Size = new System.Drawing.Size(336, 225);
+            this.MatchupsListBox.Size = new System.Drawing.Size(336, 214);
             this.MatchupsListBox.TabIndex = 4;
+            this.MatchupsListBox.SelectedIndexChanged += new System.EventHandler(this.MatchupsListBox_SelectedIndexChanged);
             // 
             // UnplayedMatchesCheckBox
             // 
