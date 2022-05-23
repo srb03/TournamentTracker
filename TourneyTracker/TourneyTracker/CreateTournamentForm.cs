@@ -262,6 +262,9 @@ namespace TourneyTracker
             newTournament.CreateRounds();
             GlobalConfig.Connection.CreateTournament(newTournament);
 
+            TournamentViewerForm frm = new TournamentViewerForm(newTournament);
+            frm.Show();
+
             this.Close();
         }
 

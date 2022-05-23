@@ -41,6 +41,7 @@ namespace TournamentTrackerLibrary.Models
         public MatchupEntryModel()
         {
             TeamCompeting = null;
+            TeamCompetingId = -1;
             ParentMatchup = null;
         }
     }

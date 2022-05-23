@@ -52,18 +52,44 @@ namespace TourneyTracker
         {
             MatchupModel matchup = (MatchupModel)MatchupsListBox.SelectedItem;
 
-            TeamOneLabel.Text = matchup.Entries[0].TeamCompeting.TeamName;
-            TeamOneTextBox.Text = matchup.Entries[0].Score.ToString();
-
-            if (matchup.Entries.Count > 1)
+            if (matchup.Entries[0].TeamCompeting != null)
             {
-                TeamTwoLabel.Text = matchup.Entries[1].TeamCompeting.TeamName;
-                TeamTwoTextBox.Text = matchup.Entries[1].Score.ToString();
+                TeamOneLabel.Text = matchup.Entries[0].TeamCompeting.TeamName;
+                TeamOneTextBox.Text = matchup.Entries[0].Score.ToString();
+
+                if (matchup.Entries.Count > 1)
+                {
+                    TeamTwoLabel.Text = matchup.Entries[1].TeamCompeting.TeamName;
+                    TeamTwoTextBox.Text = matchup.Entries[1].Score.ToString();
+                }
+                else
+                {
+                    HideTeamTwoScore(false);
+                } 
             }
             else
             {
-                TeamTwoLabel.Text = "Direct pass";
+                HideTeamOneScore(false);
+                HideTeamTwoScore(false);
             }
+        }
+
+        private void HideTeamOneScore(bool hide)
+        {
+            VersusLabel.Visible = hide;
+
+            TeamOneLabel.Visible = hide;
+
+            TeamOneTextBox.Visible = hide;
+        }
+
+        private void HideTeamTwoScore(bool hide)
+        {
+            VersusLabel.Visible = hide;
+
+            TeamTwoLabel.Visible = hide;
+
+            TeamTwoTextBox.Visible = hide;
         }
 
 
@@ -91,7 +117,14 @@ namespace TourneyTracker
 
         private void MatchupsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            HideTeamOneScore(true);
+            HideTeamTwoScore(true);
             LoadScoreMatchup();
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
