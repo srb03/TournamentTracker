@@ -59,8 +59,11 @@ namespace TourneyTracker
 
                 if (matchup.Entries.Count > 1)
                 {
-                    TeamTwoLabel.Text = matchup.Entries[1].TeamCompeting.TeamName;
-                    TeamTwoTextBox.Text = matchup.Entries[1].Score.ToString();
+                    if (matchup.Entries[1].TeamCompeting != null)
+                    {
+                        TeamTwoLabel.Text = matchup.Entries[1].TeamCompeting.TeamName;
+                        TeamTwoTextBox.Text = matchup.Entries[1].Score.ToString(); 
+                    }
                 }
                 else
                 {
@@ -124,7 +127,76 @@ namespace TourneyTracker
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            if (ValidateScore())
+            {
+                int scoreTeamOne = 0;
+                int scoreTeamTwo = 0;
 
+                bool validScoreTeamOne = int.TryParse(TeamOneTextBox.Text, out scoreTeamOne);
+                bool validScoreTeamTwo = int.TryParse(TeamTwoTextBox.Text, out scoreTeamTwo);
+
+                MatchupModel matchup = (MatchupModel)MatchupsListBox.SelectedItem;
+
+                for (int i = 0; i < matchup.Entries.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        matchup.Entries[i].Score = scoreTeamOne;
+                    }
+
+                    if (i == 1)
+                    {
+                        matchup.Entries[i].Score = scoreTeamTwo;
+                    }
+                }
+
+                tournament.UpdateScores();
+            }
+            else
+            {
+                MessageBox.Show("The score is not valid.", 
+                    "Invalid score.", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
+            }
+        }
+
+
+        /// <summary>
+        /// Validates the scores that are available.
+        /// </summary>
+        /// <returns></returns>
+        private bool ValidateScore()
+        {
+            bool isValidScore = true;
+
+            if (TeamOneTextBox.Visible)
+            {
+                try
+                {
+                    int score = 0;
+                    isValidScore = int.TryParse(TeamOneTextBox.Text, out score);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            if (TeamTwoTextBox.Visible)
+            {
+                try
+                {
+                    int score = 0;
+                    isValidScore = int.TryParse(TeamTwoTextBox.Text, out score);
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            return isValidScore;
         }
     }
 }

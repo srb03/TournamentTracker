@@ -407,5 +407,60 @@ namespace TournamentTrackerLibrary.DataAccess
         }
 
 
+        /// <summary>
+        /// Update the matchup's winner.
+        /// </summary>
+        /// <param name="matchup">The matchup object to updated.</param>
+        public void UpdateMatchup(MatchupModel matchup)
+        {
+            //using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", matchup.Id);
+                
+                if (matchup.Winner != null)
+                {
+                    p.Add("@WinnerId", matchup.Winner.Id);
+                }
+                else
+                {
+                    p.Add("@WinnerId", null);
+                }
+
+
+
+                connection.Execute("dbo.spMatchups_Update", p, commandType: CommandType.StoredProcedure);
+
+                UpdateMatchupEntries(connection, matchup.Entries);
+            }
+
+
+        }
+
+        /// <summary>
+        /// Update de entries of one matchup.
+        /// </summary>
+        /// <param name="entries">List of entries.</param>
+        private void UpdateMatchupEntries(IDbConnection connection ,List<MatchupEntryModel> entries)
+        {
+            foreach (MatchupEntryModel entry in entries)
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", entry.Id);
+                if (entry.TeamCompeting != null)
+                {
+                    p.Add("@TeamCompetingId", entry.TeamCompeting.Id);
+                }
+                else
+                {
+                    p.Add("@TeamCompetingId", null);
+                }
+                
+                p.Add("@Score", entry.Score);
+
+                connection.Execute("dbo.spMatchupEntries_Update", p, commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }

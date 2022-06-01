@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TournamentTrackerLibrary;
 
 namespace TournamentTrackerLibrary.Models
 {
@@ -63,6 +64,85 @@ namespace TournamentTrackerLibrary.Models
             CreateOtherRounds(rounds);
         }
 
+
+        public void UpdateScores()
+        {
+            List<MatchupModel> toScore = new List<MatchupModel>();
+            foreach (List<MatchupModel> round in this.Rounds)
+            {
+                foreach (MatchupModel match in round)
+                {
+                    if (match.Winner == null && (match.Entries.Count == 1 || match.Entries.Any(x => x.Score != 0)))
+                    {
+                        toScore.Add(match);
+                    }
+                }
+            }
+
+            MarkWinners(toScore);
+            AdvanceWinners(toScore, this);
+
+            toScore.ForEach(x => GlobalConfig.Connection.UpdateMatchup(x));
+        }
+
+        /// <summary>
+        /// Adavance the winner team to the next round and save it to the database.
+        /// </summary>
+        /// <param name="models">The list of match with teams to be advanced.</param>
+        /// <param name="tournament">The object tournament.</param>
+        private static void AdvanceWinners(List<MatchupModel> models, TournamentModel tournament)
+        {
+            foreach (MatchupModel m in models)
+            {
+                foreach (List<MatchupModel> round in tournament.Rounds)
+                {
+                    foreach (MatchupModel rm in round)
+                    {
+                        foreach (MatchupEntryModel me in rm.Entries)
+                        {
+                            if (me.ParentMatchup != null)
+                            {
+                                if (me.ParentMatchup.Id == m.Id)
+                                {
+                                    me.TeamCompeting = m.Winner;
+                                    GlobalConfig.Connection.UpdateMatchup(rm);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get a list of matchups and mark the winners.
+        /// </summary>
+        /// <param name="matchups">List of matchups objects.</param>
+        private void MarkWinners(List<MatchupModel> matchups)
+        {
+            foreach (MatchupModel matchup in matchups)
+            {
+                if (matchup.Entries.Count == 1)
+                {
+                    matchup.Winner = matchup.Entries.First().TeamCompeting;
+                    continue;
+                }
+
+                if (matchup.Entries[0].Score > matchup.Entries[1].Score)
+                {
+                    matchup.Winner = matchup.Entries[0].TeamCompeting;
+                }
+                else if (matchup.Entries[1].Score > matchup.Entries[0].Score)
+                {
+                    matchup.Winner = matchup.Entries[1].TeamCompeting;
+                }
+                else
+                {
+                    throw new Exception("There is no support for ties. Must provide a winner");
+                }
+            }
+        }
+
         /// <summary>
         /// Create the rest of the round in the matchup.
         /// </summary>
@@ -96,6 +176,7 @@ namespace TournamentTrackerLibrary.Models
                 round++;
             }
         }
+
 
         /// <summary>
         /// Create the first round for the tournament.
