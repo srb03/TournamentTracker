@@ -15,8 +15,13 @@ namespace TourneyTracker
     {
         List<int> rounds = new List<int>();
         
-        
-        List<MatchupModel> matchupsList = new List<MatchupModel>();
+        // All the matchups in the current round
+        List<MatchupModel> AllMatchupsList = new List<MatchupModel>();
+
+        // All the matchups to show in the list
+        List<MatchupModel> matchupsToShowList = new List<MatchupModel>();
+
+        // The actual tournament object
         TournamentModel tournament = new TournamentModel();
 
         public TournamentViewerForm(TournamentModel tournamentPassed)
@@ -28,20 +33,31 @@ namespace TourneyTracker
             SetHeaderLabel();
 
             LoadRounds();
-
-            
         }
 
         private void FillMatchupListBox()
         {
-            MatchupsListBox.DataSource = matchupsList;
+            MatchupsListBox.DataSource = AllMatchupsList;
             MatchupsListBox.DisplayMember = "MatchupDisplay";
         }
 
         private void RoundsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int selectedRound = (int)RoundsComboBox.SelectedItem;
-            matchupsList = tournament.Rounds.Where(x => x.First().MatchupRound == selectedRound).First();
+            //int selectedRound = (int)RoundsComboBox.SelectedItem;
+            //AllMatchupsList = tournament.Rounds.Where(x => x.First().MatchupRound == selectedRound).First();
+
+            if (UnplayedMatchesCheckBox.Checked)
+            {
+                List<MatchupModel> unplayedMatchups = AllMatchupsList.Where(x => x.Winner == null).ToList();
+                AllMatchupsList = unplayedMatchups;
+            }
+            else
+            {
+                int selectedRound = (int)RoundsComboBox.SelectedItem;
+                AllMatchupsList = tournament.Rounds.Where(x => x.First().MatchupRound == selectedRound).First();
+            }
+
+            
             FillMatchupListBox();
 
             LoadScoreMatchup();
@@ -52,7 +68,7 @@ namespace TourneyTracker
         {
             MatchupModel matchup = (MatchupModel)MatchupsListBox.SelectedItem;
 
-            if (matchup.Entries[0].TeamCompeting != null)
+            if (matchup != null && matchup.Entries[0].TeamCompeting != null)
             {
                 TeamOneLabel.Text = matchup.Entries[0].TeamCompeting.TeamName;
                 TeamOneTextBox.Text = matchup.Entries[0].Score.ToString();
@@ -198,5 +214,25 @@ namespace TourneyTracker
 
             return isValidScore;
         }
+
+        private void UnplayedMatchesCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            List<MatchupModel> unplayedMatchups = new List<MatchupModel>();
+
+            if (UnplayedMatchesCheckBox.Checked)
+            {
+                unplayedMatchups = AllMatchupsList.Where(x => x.Winner == null).ToList();
+                AllMatchupsList = unplayedMatchups;
+            }
+            else
+            {
+                int selectedRound = (int)RoundsComboBox.SelectedItem;
+                AllMatchupsList = tournament.Rounds.Where(x => x.First().MatchupRound == selectedRound).First();
+            }
+
+            FillMatchupListBox();
+        }
+
+
     }
 }

@@ -93,6 +93,7 @@
             this.UnplayedMatchesCheckBox.TabIndex = 3;
             this.UnplayedMatchesCheckBox.Text = "Unplayed only";
             this.UnplayedMatchesCheckBox.UseVisualStyleBackColor = true;
+            this.UnplayedMatchesCheckBox.CheckedChanged += new System.EventHandler(this.UnplayedMatchesCheckBox_CheckedChanged);
             // 
             // TeamOneLabel
             // 
