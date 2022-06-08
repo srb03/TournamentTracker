@@ -49,12 +49,54 @@ namespace TournamentTrackerLibrary.Models
         /// <param name="placeName">The name of the prize.</param>
         /// <param name="prizeAmount">The quantity given to the winner.</param>
         /// <param name="prizePercent">The percent of the total entry fee.</param>
-        public PrizeModel(int placeNumber, string placeName, decimal prizeAmount, double prizePercent)
+        public PrizeModel(int placeNumber, string placeName, string prizeAmount, double prizePercent)
         {
-            PlaceNumber = placeNumber;
-            PlaceName = placeName;
-            PrizeAmount = prizeAmount;
-            PrizePercentage = prizePercent;
+            PlaceNumber = ValidatePrizePlace(placeNumber);
+            PlaceName = ValidatePlaceName(placeName);
+            PrizeAmount = ValidatePrizeAmount(prizeAmount);
+            PrizePercentage = ValidatePrizePercentage(prizePercent);
+        }
+
+        private double ValidatePrizePercentage(double prizePercentage)
+        {
+            if (prizePercentage >= 0 && prizePercentage <= 100)
+            {
+                return prizePercentage;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("The prize percente must be between 0 and 100.");
+            }
+        }
+
+        private decimal ValidatePrizeAmount(string prizeAmountString)
+        {
+            // PrizeAmountTextBox.Text = string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0:C2}", PrizeAmountValue);
+            decimal prizeAmount = Decimal.Parse(prizeAmountString, System.Globalization.NumberStyles.Currency);
+
+            if (prizeAmount < 0)
+            {
+                throw new ArgumentOutOfRangeException("The prize can't be less than 0");
+            }
+
+            return prizeAmount;
+        }
+
+        private  string ValidatePlaceName(string placeName)
+        {
+                return placeName.Trim();
+        }
+
+        private int ValidatePrizePlace(int prizePlace)
+        {
+            if (prizePlace == 1 || prizePlace == 2)
+            {
+                return prizePlace;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException();
+            }
         }
 
         public PrizeModel()

@@ -160,22 +160,35 @@ namespace TourneyTracker
         {
             int placeNumber = (int)PrizePlaceComboBox.SelectedItem;
             string placeName = PlaceNameTextBox.Text;
-            decimal prizeAmount = 0;
+            string prizeAmount = "$0.00";
             double prizePercent = 0;
+
             if (PrizeAmountRadioButton.Checked)
             {
-                prizeAmount = Decimal.Parse(PrizeAmountTextBox.Text, System.Globalization.NumberStyles.Currency);
+                prizeAmount = PrizeAmountTextBox.Text;
             }
             else
             {
                 prizePercent = double.Parse(PrizePercentNumericUpDown.Value.ToString());
             }
-            
-            PrizeModel prize = new PrizeModel(placeNumber, placeName, prizeAmount, prizePercent);
-            
-            callingForm.CompletePrize(prize);
 
-            this.Close();
+            try
+            {
+                PrizeModel prize = new PrizeModel(placeNumber, placeName, prizeAmount, prizePercent);
+                callingForm.CompletePrize(prize);
+                this.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            finally
+            {
+                PrizePlaceComboBox.SelectedIndex = 0;
+                PlaceNameTextBox.Text = "";
+                PrizeAmountTextBox.Text = "$0.00";
+                PrizePercentNumericUpDown.Value = 0;
+            }
         }
 
         private ErrorMessage ValidateData()
