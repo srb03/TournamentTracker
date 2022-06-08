@@ -64,7 +64,14 @@ namespace LibraryTests
             {
                 
             }
-            Assert.AreEqual(expectedFirstRound, t.CreateFirstRound(t, fakeTeams));
+            Assert.AreEqual(expectedFirstRound, t.CreateFirstRound(t.EnteredTeams, fakeTeams));
+        }
+
+        [TestMethod]
+        public void ValidatePrizePlace_Tests()
+        {
+            int[] actualPrizePlace = { 1, 2, 3, 4, 5, 6 };
+
         }
     }
 }

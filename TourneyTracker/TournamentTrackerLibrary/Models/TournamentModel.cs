@@ -184,7 +184,7 @@ namespace TournamentTrackerLibrary.Models
         /// <param name="teams">List of teams added to the tournament.</param>
         /// <param name="fakeTeams">The number of fake teams to complete the tournament.</param>
         /// <returns>List of MatchupModel that represents the first round of the tournament.</returns>
-        private List<MatchupModel> CreateFirstRound(List<TeamModel> teams, int fakeTeams)
+        public List<MatchupModel> CreateFirstRound(List<TeamModel> teams, int fakeTeams)
         {
             List<MatchupModel> firstRound = new List<MatchupModel>();
             MatchupModel currMatchup = new MatchupModel();
@@ -214,7 +214,7 @@ namespace TournamentTrackerLibrary.Models
         /// <param name="teams">The number of teams.</param>
         /// <returns>Return the number of fake teams needed to complete the tournament.
         /// Example: There are three teams with two rounds then function returns 1.</returns>
-        private int CalculateFakeTeams(int rounds, int teams)
+        public int CalculateFakeTeams(int rounds, int teams)
         {
             int fakeTeams = 0;
             int teamsNeeded = 1;
@@ -233,7 +233,7 @@ namespace TournamentTrackerLibrary.Models
         /// </summary>
         /// <param name="numberOfTeams">Number of teams added to the tournament.</param>
         /// <returns>The number of rounds the tournament will has.</returns>
-        private int CalculateRounds(int numberOfTeams)
+        public int CalculateRounds(int numberOfTeams)
         {
             int rounds = 1;
             int teamsNeeded = 2;
